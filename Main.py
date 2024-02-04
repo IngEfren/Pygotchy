@@ -6,40 +6,48 @@
 # Modulo para trabajar con funciones de la pantalla
 # pip install Pillow
 
-# Importamos modulo para trabajar con funciones del sistema
-#import pyautogui
+import pygame
+import sys
+import random
 
-# Tomamos una captura de pantalla almacenada en la ruta dada
-#pyautogui.screenshot(r"C:\Users\edgar\Downloads\screenshot1.png")
+# Inicializar Pygame
+pygame.init()
 
-import pyautogui
-import time
+# Definir dimensiones de la pantalla y tamaño de cada celda
+width, height = 400, 400
+cell_size = 50
 
-def mostrar_pato_8bit():
-    # Definir la representación del pato en 8 bits
-    patito_8bit = """
+# Definir colores
+colors = [
+    (255, 0, 0),   # Rojo
+    (0, 255, 0),   # Verde
+    (0, 0, 255),   # Azul
+    (255, 255, 0), # Amarillo
+    (255, 0, 255), # Magenta
+    (0, 255, 255)  # Cian
+]
 
-  ╱|、
-(˚ˎ 。7  
- |、˜〵          
-じしˍ,)ノ
+# Crear la pantalla
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption('Matriz de Colores')
 
-    """
+# Generar matriz de colores aleatorios
+matrix = [[random.choice(colors) for _ in range(16)] for _ in range(16)]
 
-    # Esperar unos segundos antes de mostrar el pato
-    time.sleep(3)
+# Bucle principal
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
 
-    # Crear una imagen temporal del pato
-    # pyautogui.screenshot('pato_8bit.png')
+    # Dibujar la matriz de colores en la pantalla
+    for row in range(16):
+        for col in range(16):
+            pygame.draw.rect(screen, matrix[row][col], (col * cell_size, row * cell_size, cell_size, cell_size))
 
-    # Abrir la imagen con PyAutoGUI
-    pyautogui.alert(text=patito_8bit, title='Pato en 8 bits', button='UWU')
+    # Actualizar pantalla
+    pygame.display.flip()
 
-    # Eliminar la imagen temporal
-    # pyautogui.screenshot('pato_8bit.png').close()
-
-# Esperar unos segundos antes de mostrar el pato
-time.sleep(3)
-
-# Mostrar el pato en 8 bits utilizando PyAutoGUI
-mostrar_pato_8bit()
+# Salir del programa
+pygame.quit()
